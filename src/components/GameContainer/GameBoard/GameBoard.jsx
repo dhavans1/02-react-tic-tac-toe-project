@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Block from "./Block/Block";
 import Reset from "../Reset/Reset";
 import GameOver from "../GameOver/GameOver";
@@ -13,6 +13,10 @@ export default function GameBoard({gameData, ...props}) {
     const [blockClickCounter, updateBlockClick] = useState(0);
     const [data, updateData] = useState(initData);
     const [gameResult, updateResult] = useState(null);
+
+    useEffect(() => {
+        checkGameStatus();
+    }, [data]);
 
     function checkGameStatus() {
         if (blockClickCounter > 2) {
@@ -42,17 +46,28 @@ export default function GameBoard({gameData, ...props}) {
                 (data[2][0] === 'O' && data[1][1] === 'O' && data[0][2] === 'O')
             ) {
                 updateResult(p2 + ' Won!');
-            } else if (blockClickCounter === 8) {
+            } else if (blockClickCounter === 9) {
                 updateResult('It\'s a Tie!');
             }
         }
     }
 
     function handleLogic(row, col, val) {
-        updateBlockClick(blockClickCounter + 1);
-        data[row][col] = val;
-        updateData(data);
-        checkGameStatus();
+        updateBlockClick((blockClickCounter) => blockClickCounter + 1);
+        // data[row][col] = val;
+        // updateData(data);
+        // NOTE: Don't update existing data matrix like above since it will mutate the array but keep the same reference. 
+        // If there is no change in the variable's reference address then React will no re-render thinking there's no change in the variable
+        // This applies to variables with references - Arrays and objects
+        // Hence deep copying the matrix below and updatinsg the state with it
+        
+        updateData((data) => {
+            const updatedData = [...data.map(v => [...v])];
+            updatedData[row][col] = val;
+            return updatedData;
+        });
+
+        // checkGameStatus(); Executing here will NOT work since it's executed immediately (closure) before the state update done above. So, use useEffect.
         gameData([row, col, val]);
     }
 
@@ -95,7 +110,7 @@ export default function GameBoard({gameData, ...props}) {
                 ></GameOver>
             }
 
-            <Reset onBtnClick={() => resetGame}></Reset>
+            <Reset onBtnClick={resetGame}></Reset>
         </>
     );
 }
