@@ -14,7 +14,6 @@ export default function Players({Selector="li", players, setPlayerNames, ...prop
                     <Player
                         initName={players[0]}
                         symbol="X"
-                        disabled={true}
                         notify={([v, i]) => updatePlayerNames(v, i)}
                     ></Player>
                 </Selector>
@@ -22,7 +21,6 @@ export default function Players({Selector="li", players, setPlayerNames, ...prop
                     <Player
                         initName={players[1]}
                         symbol="Y"
-                        disabled={true}
                         notify={([v, i]) => updatePlayerNames(v, i)}
                     ></Player>
                 </Selector>

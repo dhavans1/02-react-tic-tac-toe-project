@@ -1,22 +1,27 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Player({initName = "Player", symbol, notify, ...props}) {
-
-    const [playerName, updatePlayerName] = useState(initName);
-
+    const [playerName, setPlayerName] = useState(initName);
+    const [prevName, setPrevName] = useState(initName);
+    const [isEditing, setEditState] = useState(false);
     const inputRef = useRef(null);
-    let prevName = initName;
 
-    function clearPlayerName() {
-        prevName = inputRef.current.value;
-        updatePlayerName('');
-        inputRef.current.disabled = false;
-        inputRef.current.focus();
+    useEffect(() => {
+        if (isEditing && inputRef?.current) {
+            setPrevName(playerName);
+            inputRef.current.focus();
+        }
+    }, [isEditing]);
+
+    function handleEditClick() {
+        setEditState(!isEditing);
+        setPrevName(playerName);
+        setPlayerName(inputRef.current.value);
     }
 
     function onBlur() {
         if (inputRef.current.value === '') {
-            inputRef.current.value = prevName;
+            inputRef.current.value = prevName ?? initName; 
         }
         notify([inputRef.current.value, symbol === 'X' ? 0 : 1]);
     }
@@ -24,25 +29,30 @@ export default function Player({initName = "Player", symbol, notify, ...props}) 
     return (
         <>
             <div className="player">
-                <input
-                    type="text"
-                    value={playerName}
-                    onChange={(event) => updatePlayerName(event.target.value)}
-                    className="player-name"
-                    {...props}
-                    ref={inputRef}
-                    disabled={true}
-                    onKeyDown={(event) => event.key === 'Enter' && onBlur()}
-                    onBlur={() => onBlur()}
-                />
+                {
+                    !isEditing && 
+                    <span className="player-name">{playerName}</span>
+                }
+                {
+                    isEditing && 
+                    <input
+                        type="text"
+                        value={playerName}
+                        onChange={(event) => setPlayerName(event.target.value)}
+                        {...props}
+                        ref={inputRef}
+                        onKeyDown={(event) => event.key === 'Enter' && onBlur()}
+                        onBlur={onBlur}
+                    />
+                }
 
                 <span className="player-symbol">{symbol}</span>
 
                 <button
                     className="button"
-                    onClick={() => clearPlayerName()}
+                    onClick={handleEditClick}
                 >
-                    Edit
+                    {isEditing ? 'Save' : 'Edit'}
                 </button>
             </div>
         </>
