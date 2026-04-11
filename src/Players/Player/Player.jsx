@@ -1,14 +1,15 @@
 import { useState, useRef } from "react";
 
-export default function Player({initName = "Player", symbol, ...props}) {
+export default function Player({initName = "Player", symbol, notify, ...props}) {
 
     const [playerName, updatePlayerName] = useState(initName);
+
     const inputRef = useRef(null);
     let prevName = initName;
 
     function clearPlayerName() {
         prevName = inputRef.current.value;
-        inputRef.current.value = '';
+        updatePlayerName('');
         inputRef.current.disabled = false;
         inputRef.current.focus();
     }
@@ -17,7 +18,7 @@ export default function Player({initName = "Player", symbol, ...props}) {
         if (inputRef.current.value === '') {
             inputRef.current.value = prevName;
         }
-        inputRef.current.disabled = true;
+        notify([inputRef.current.value, symbol === 'X' ? 0 : 1]);
     }
 
     return (
@@ -30,6 +31,8 @@ export default function Player({initName = "Player", symbol, ...props}) {
                     className="player-name"
                     {...props}
                     ref={inputRef}
+                    disabled={true}
+                    onKeyDown={(event) => event.key === 'Enter' && onBlur()}
                     onBlur={() => onBlur()}
                 />
 

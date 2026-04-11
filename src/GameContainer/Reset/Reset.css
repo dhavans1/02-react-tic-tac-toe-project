@@ -1,0 +1,25 @@
+#reset-button  {
+  display: flex;
+  width: 10rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-overflow: ellipsis;
+  text-align: center;
+  background: linear-gradient(#383624,  #282617);
+  box-shadow: 0  0  20px  rgba(0,  0,  0,  0.5);
+  border-color: #aca788;
+  color: #aca788;
+  transition: all 0.2s, color 0.2s;
+  margin: auto;
+  justify-content: center;
+}
+
+#reset-button:hover {
+  background: linear-gradient(#aca788,  #aca788);
+  box-shadow: 0  0  20px  rgba(0,  0,  0,  0.5);
+  border-color: #282617;
+  color: #282617;
+}
