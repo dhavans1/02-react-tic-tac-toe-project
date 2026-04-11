@@ -1,8 +1,8 @@
 import Header from "./Header"
-import GameContainer from "./GameContainer/GameContainer";
-import Players from "./Players/Players";
-import GameBoard from "./GameContainer/GameBoard/GameBoard";
-import Logger from "./Logger/Logger";
+import GameContainer from "./components/GameContainer/GameContainer";
+import Players from "./components/Players/Players";
+import GameBoard from "./components/GameContainer/GameBoard/GameBoard";
+import Logger from "./components/Logger/Logger";
 import { useState } from "react";
 
 function App() {
