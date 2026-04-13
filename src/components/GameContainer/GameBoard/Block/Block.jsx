@@ -1,23 +1,26 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-export default function Block({playerIndex, index, onBtnClick, row, col, data, ...props}) {
-    const btnRef = useRef(null);
-    const [disabled, setDisabled] = useState(false);
+export default function Block({
+  playerIndex,
+  onBtnClick,
+  row,
+  col,
+  data,
+  ...props
+}) {
+  const btnRef = useRef(null);
+  function handleClick() {
+    btnRef.current.value = !playerIndex ? "X" : "O";
+    onBtnClick({
+      row: row,
+      col: col,
+      val: btnRef.current.value
+    });
+  }
 
-    function handleClick() {
-        btnRef.current.value = !playerIndex ? 'X' : 'O';
-        onBtnClick(row, col, btnRef.current.value);
-        setDisabled(data[row][col] !== '');
-    }
-
-    return (
-        <button
-            ref={btnRef}
-            onClick={() => handleClick()}
-            id={index}
-            {...props}
-        >
-            <span>{ data[row][col] }</span>
-        </button>
-    );
+  return (
+    <button ref={btnRef} onClick={handleClick} {...props}>
+      <span>{data[row][col]}</span>
+    </button>
+  );
 }

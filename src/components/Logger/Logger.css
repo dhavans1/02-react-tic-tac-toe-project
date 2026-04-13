@@ -1,35 +1,36 @@
 div.logger-container {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: #aca788 0.1rem solid;
-    border-radius: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: #aca788 0.1rem solid;
+  border-radius: 1rem;
 }
 
 div.logger-container p {
-    margin: 0;
-    display: flex;
-    justify-content: center;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 ul.logger-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 ul.logger-list li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
 }
 
 ul.logger-list span {
-    margin: 0;
-    min-width: 6rem;
+  margin: 0;
+  min-width: 6rem;
+  text-transform: uppercase;
 }
 
 #log {
@@ -43,8 +44,11 @@ ul.logger-list span {
 
 #log li {
   border-radius: 4px;
-  animation: slide-in-from-left 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
   margin: 0.75rem;
+}
+
+li:first-of-type {
+  animation: slide-in-from-left 1s cubic-bezier(0.075, 0.82, 0.165, 1) backwards;
 }
 
 #log li.highlighted {
