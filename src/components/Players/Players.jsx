@@ -1,32 +1,35 @@
 import Player from "./Player/Player";
 
-export default function Players({Selector="li", players, setPlayerNames, ...props}) {
+export default function Players({
+  Selector = "li",
+  players,
+  activePlayerIndex,
+  setPlayerNames,
+  ...props
+}) {
+  function updatePlayerNames(val, i) {
+    players[i].name = val;
+    setPlayerNames(players);
+  }
 
-    function updatePlayerNames(val, i) {
-        players[i] = val;
-        setPlayerNames(players);
-    }
-
-    return (
-        <>
-            <ul {...props}>
-                <Selector>
-                    <Player
-                        initName={players[0]}
-                        symbol="X"
-                        disabled={true}
-                        notify={([v, i]) => updatePlayerNames(v, i)}
-                    ></Player>
-                </Selector>
-                <Selector>
-                    <Player
-                        initName={players[1]}
-                        symbol="Y"
-                        disabled={true}
-                        notify={([v, i]) => updatePlayerNames(v, i)}
-                    ></Player>
-                </Selector>
-            </ul>
-        </>
-    );
+  return (
+    <>
+      <ul {...props}>
+        <Selector className={activePlayerIndex === 0 ? "active" : undefined}>
+          <Player
+            initName={players[0].name}
+            symbol="X"
+            notify={([v, i]) => updatePlayerNames(v, i)}
+          ></Player>
+        </Selector>
+        <Selector className={activePlayerIndex === 1 ? "active" : undefined}>
+          <Player
+            initName={players[1].name}
+            symbol="Y"
+            notify={([v, i]) => updatePlayerNames(v, i)}
+          ></Player>
+        </Selector>
+      </ul>
+    </>
+  );
 }
