@@ -39,6 +39,15 @@ export function getInitGameBoard() {
   return [...initGameBoard.map((row) => [...row])];
 }
 
+export function jumpToMove(gameBoard, logs, move) {
+  for (let i = 0; i < logs.length - 1 - move.id; i++) {
+    gameBoard[logs[i].row][logs[i].col] = null;
+  }
+  const newLogs = logs.slice(logs.length - 1 - move.id);
+
+  return [[...gameBoard.map((row) => [...row])], newLogs];
+}
+
 export function setGameBoard(gameBoard, { row, col, val }) {
   gameBoard[row][col] = val;
   return [...gameBoard.map((row) => [...row])];

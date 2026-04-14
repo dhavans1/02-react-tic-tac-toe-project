@@ -18,12 +18,36 @@ function App() {
     updateGameBoard((prevGameBoard) =>
       utils.setGameBoard(prevGameBoard, newVal),
     );
-    updateLogs((prevLogs) => [newVal, ...prevLogs]);
+    updateLogs((prevLogs) => [
+      {
+        id: prevLogs.length,
+        ...newVal,
+      },
+      ...prevLogs,
+    ]);
+  }
+
+  function handleJumpClick(log) {
+    const [updatedGameBoard, updatedLogs] = utils.jumpToMove(
+      gameBoard,
+      logs,
+      log,
+    );
+    updateGameBoard(updatedGameBoard);
+    updateLogs(updatedLogs);
   }
 
   function resetGame() {
     updateGameBoard(utils.getInitGameBoard);
     updateLogs([]);
+  }
+
+  function reverseMove() {
+    if (logs.length > 1) {
+      handleJumpClick(logs[1]);
+    } else {
+      resetGame();
+    }
   }
 
   return (
@@ -45,10 +69,12 @@ function App() {
           onBlockClick={handleBlockClick}
           gameResult={gameResult}
           resetGame={resetGame}
+          reverseMove={reverseMove}
+          gameStarted={logs.length}
         />
       </GameContainer>
 
-      <Logger logs={logs} players={players} />
+      <Logger logs={logs} players={players} handleJumpClick={handleJumpClick} />
     </>
   );
 }

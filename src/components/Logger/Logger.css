@@ -22,19 +22,18 @@ ul.logger-list {
 
 ul.logger-list li {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   margin: 1rem;
 }
 
 ul.logger-list span {
-  margin: 0;
+  margin: 0 3rem 0 0;
   min-width: 6rem;
   text-transform: uppercase;
 }
 
 #log {
-  max-width: 20rem;
   color: #b1ac62;
   list-style: none;
   margin: 2rem auto;
@@ -54,4 +53,32 @@ li:first-of-type {
 #log li.highlighted {
   background-color: #3f3b00;
   color: white;
+}
+
+.jump-button {
+  display: flex;
+  width: 10rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-overflow: ellipsis;
+  text-align: center;
+  background: linear-gradient(#383624, #282617);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: #aca788;
+  color: #aca788;
+  transition:
+    all 0.2s,
+    color 0.2s;
+  margin: auto;
+  justify-content: center;
+}
+
+.jump-button:hover {
+  background: linear-gradient(#aca788, #aca788);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-color: #282617;
+  color: #282617;
 }

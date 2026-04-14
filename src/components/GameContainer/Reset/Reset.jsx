@@ -1,5 +1,3 @@
-import "./Reset.css";
-
 export default function Reset({ onBtnClick }) {
   return (
     <>

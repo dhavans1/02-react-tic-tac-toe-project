@@ -1,5 +1,6 @@
 import Block from "./Block/Block";
 import Reset from "../Reset/Reset";
+import Reverse from "../Reverse/Reverse";
 import GameOver from "../GameOver/GameOver";
 
 export default function GameBoard({
@@ -10,6 +11,8 @@ export default function GameBoard({
   gameData,
   gameResult,
   resetGame,
+  reverseMove,
+  gameStarted,
   ...props
 }) {
   /*
@@ -58,6 +61,7 @@ export default function GameBoard({
         <GameOver result={gameResult} onClick={resetGame}></GameOver>
       )}
 
+      {!!gameStarted && <Reverse onBtnClick={reverseMove}></Reverse>}
       <Reset onBtnClick={resetGame}></Reset>
     </>
   );
